@@ -9,24 +9,6 @@ import * as seedrandom from 'seedrandom/seedrandom.js'
 import { GeneEditorComponent } from './app/geneEditorComponent.js';
 
 
-let _APP = null;
-
-window.addEventListener('DOMContentLoaded', () => {
-    _APP = new Generator();
-
-
-    _APP.geneEditor.addEventListener('editor.change', function(evt) {
-        // evt.detail;
-        _APP.OnChange();
-    });
-//   const inputs = document.querySelectorAll('input');
-//   inputs.forEach(i => {
-//     i.onchange = () => {
-//       _APP.OnChange();
-//     };
-//   });
-});
-
 class Generator {
 
     CANVAS_WIDTH = 704;
@@ -34,10 +16,15 @@ class Generator {
 
     constructor() {
         this._id = 0;
-        this._configuration = (v) => (new URLSearchParams(window.location.search)); 
-        
+        // this._configuration = (v) => (new URLSearchParams(window.location.search));
+        // this._configuration = (v) => {"plantCount"};
+        this._configuration = () => ({
+            plantCount: 9,
+            seed: 'exampleSeed123',
+            plantType: 'flower'
+        });
 
-        this.geneEditor = new GeneEditorComponent({elementId: 'gene-editor-component'});
+        // this.geneEditor = new GeneEditorComponent({elementId: 'gene-editor-component'});
 
         this.OnChange()
     }
@@ -49,7 +36,7 @@ class Generator {
 
     _UpdateFromUI() {
 
-        new Math.seedrandom(); // call with new to create a standalone generator without affecting Math.random() yet.
+        // new Math.seedrandom(); // call with new to create a standalone generator without affecting Math.random() yet.
         Math.seed = function(x) { return Math.seedrandom(x); }
 
     }
@@ -58,8 +45,8 @@ class Generator {
 
 
 
-        let plantCount = this.configuration.get("plantCount") || 9;
-        let renderObject = document.getElementById('render-object');
+        let plantCount = this.configuration.plantCount || 9;
+        // let renderObject = document.getElementById('render-object');
 
 
 
@@ -70,31 +57,31 @@ class Generator {
                 xof:this.CANVAS_WIDTH/2,
                 yof:this.CANVAS_WIDTH,
                 dna: {
-                    seed: this.configuration.get('seed'),
+                    seed: this.configuration.seed,
                 },
                 filtering_enabled: false
             };
 
-            if(this.geneEditor.isEmpty) {
-                // console.log("EDITING", this.geneEditor.dna)
-                options.dna = new DNA(this.geneEditor.dna);
-                renderObject.innerHTML = "";
-            }else{
-                // console.log("NEW")
-                console.log('OPTION SEED:', options.dna.seed)
-                options.dna = new DNA(options.dna);
-            }
+            // if(this.geneEditor.isEmpty) {
+            //     // console.log("EDITING", this.geneEditor.dna)
+            //     options.dna = new DNA(this.geneEditor.dna);
+            //     renderObject.innerHTML = "";
+            // }else{
+            //     // console.log("NEW")
+            //     console.log('OPTION SEED:', options.dna.seed)
+            //     options.dna = new DNA(options.dna);
+            // }
 
-            const plant = new PlantFactory(options, this.configuration.get('plantType'));
+            const plant = new PlantFactory(options, this.configuration.plantType);
                 console.log("Generating", plant)
                 plant.generate({containerElementId: 'canvas-container'});
                     
-            if(plantCount == 1) {
-                this.geneEditor.render(plant.dna.genes);
-                var perRow = 9;
-            }else{
-                var perRow = 4
-            }
+            // if(plantCount == 1) {
+            //     this.geneEditor.render(plant.dna.genes);
+            //     var perRow = 9;
+            // }else{
+            //     var perRow = 4
+            // }
 
 
             // This contains the entire plant image and name
@@ -114,3 +101,10 @@ class Generator {
 
 
 }
+
+let _APP = null;
+
+_APP = new Generator();
+
+_APP.OnChange();
+
