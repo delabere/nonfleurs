@@ -1,0 +1,24 @@
+{
+  "name": "nonflowers-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@jaames/iro": "^5.5.2",
+    "canvas": "^2.11.2",
+    "colortranslator": "^1.9.2",
+    "named-web-colors": "^1.4.2",
+    "phantomjs": "^2.1.7",
+    "seedrandom": "^3.0.5",
+    "tracery-es8": "^1.1.0",
+    "watch": "^0.13.0",
+    "webshot-cli": "^0.3.1"
+  }
+}
