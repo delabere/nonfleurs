@@ -1,3 +1,4 @@
+import seedrandom from 'seedrandom';
 import { Noise } from './app/noise.js';
 import { Util } from './app/util.js';
 import { Color } from './app/color.js';
@@ -158,7 +159,7 @@ export class DNA {
 
     static newSeed() {
       // let seed = (""+(new Date()).getTime())
-      let seed = Math.seedrandom((""+(new Date()).getTime()))
+      let seed = seedrandom((""+(new Date()).getTime()))
       return seed;
     }
 

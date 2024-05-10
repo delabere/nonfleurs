@@ -1,3 +1,7 @@
+import { createCanvas } from 'canvas';
+import fs from 'fs';
+        // const fs = require('fs');
+
 export class Layer {
 
 
@@ -130,20 +134,43 @@ export class Layer {
         context.scale(ratio, ratio);
     }
 
-    
+    static createCanvas(w, h) {
+        // if (typeof w !== 'number' || typeof h !== 'number') {
+        //     throw new Error('Width and height must be numbers');
+        // }
+        // TODO: figure out why the canvas size isn't being passed in correctly
+        const canvas = createCanvas(100, 200);
+        const context = canvas.getContext('2d');
 
-    static createCanvas(w,h) {
-        let canvas = document.createElement('canvas');
-
-        canvas.width = w;
-        canvas.height = h; 
-        
-        var context = canvas.getContext('2d');
-
-        // this.scaleCanvas(canvas, context, w, h)
+        // Example of setting properties
+        context.imageSmoothingEnabled = true;
         context.imageSmoothingQuality = "low";
 
-        return context
-      }
+        // Example drawing: draw a simple rectangle
+        context.fillStyle = 'red';
+        context.fillRect(10, 10, 50, 50);
+
+        // Example of saving to a file
+        const out = fs.createWriteStream('./test.png');
+        const stream = canvas.createPNGStream();
+        stream.pipe(out);
+        out.on('finish', () => console.log('The PNG file was created.'));
+
+        return context; // You can return the canvas or context depending on your need
+    }
+
+    // static createCanvas(w,h) {
+    //     let canvas = document.createElement('canvas');
+    //
+    //     canvas.width = w;
+    //     canvas.height = h; 
+    //
+    //     var context = canvas.getContext('2d');
+    //
+    //     // this.scaleCanvas(canvas, context, w, h)
+    //     context.imageSmoothingQuality = "low";
+    //
+    //     return context
+    //   }
 
   }

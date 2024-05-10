@@ -28,18 +28,18 @@ export class Plant extends Drawable {
     curveCoeff3 = [Math.random()*Util.PI,Util.normRand(1,5)]
     curveCoeff4 = [Math.random()*0.5,Util.normRand(0.8,1.2)];
 
-    constructor(args) {
+    constructor(args = {}) {
         super(args);
 
-        this.args =(args != undefined) ? args : {};
-        this.xof = (args.xof != undefined) ? args.xof : 0;  
-        this.yof = (args.yof != undefined) ? args.yof : 0;
-        this.width = (args.width != undefined) ? args.width : 0;
-        this.height = (args.height != undefined) ? args.height: 0;
-        this.dna = (args.dna != undefined) ? args.dna : new DNA();
-        this.filtering_enabled = (args.filtering_enabled != undefined) ? args.filtering_enabled : true;
-            
+        this.xof = args.xof || 0;
+        this.yof = args.yof || 0;
+        this.width = args.width || 0;
+        this.height = args.height || 0;
+        // this.dna = args.dna || new DNA();
+        this.dna =  new DNA();
+        this.filtering_enabled = args.filtering_enabled !== undefined ? args.filtering_enabled : true;
     }
+            
     clamp(num, min, max) {
        return Math.min(Math.max(num, min), max);
     }

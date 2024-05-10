@@ -8,7 +8,8 @@ export class PlantFactory {
     constructor(options, plantType) {
 
         let plant = null;
-
+        
+        // NOTE: if we leave off the plant type we should get a random one
         plantType = (typeof(plantType) !== "undefined" && plantType != null ) ? plantType :  Util.randChoice(this.availableTypes);
 
         switch(plantType){

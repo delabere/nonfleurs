@@ -1,3 +1,4 @@
+import seedrandom from 'seedrandom';
 import * as VectorArray from './app/vectorArray.js';
 import { PlantFactory } from './plants/plant_factory.js';
 import {Layer} from "./app/layer.js"
@@ -5,7 +6,7 @@ import {Util} from './app/util.js';
 import {Prng} from './app/prng.js';
 import {DNA} from './dna.js';
 import {nameComponent} from './app/nameComponent.js';
-import * as seedrandom from 'seedrandom/seedrandom.js'
+// import * as seedrandom from 'seedrandom/seedrandom.js'
 import { GeneEditorComponent } from './app/geneEditorComponent.js';
 
 
@@ -19,9 +20,9 @@ class Generator {
         // this._configuration = (v) => (new URLSearchParams(window.location.search));
         // this._configuration = (v) => {"plantCount"};
         this._configuration = () => ({
-            plantCount: 9,
+            plantCount: 1,
             seed: 'exampleSeed123',
-            plantType: 'flower'
+            // plantType: 'flower'
         });
 
         // this.geneEditor = new GeneEditorComponent({elementId: 'gene-editor-component'});
@@ -37,7 +38,7 @@ class Generator {
     _UpdateFromUI() {
 
         // new Math.seedrandom(); // call with new to create a standalone generator without affecting Math.random() yet.
-        Math.seed = function(x) { return Math.seedrandom(x); }
+        Math.seed = function(x) { return seedrandom(x); }
 
     }
 
@@ -74,6 +75,7 @@ class Generator {
 
             const plant = new PlantFactory(options, this.configuration.plantType);
                 console.log("Generating", plant)
+                // TODO: here is the problem, generate needs to not take this container mebe?
                 plant.generate({containerElementId: 'canvas-container'});
                     
             // if(plantCount == 1) {
@@ -84,9 +86,10 @@ class Generator {
             // }
 
 
+            // var perRow = 9;
             // This contains the entire plant image and name
-            const name = new nameComponent({containerElementId: 'render-object'});
-                  name.render(plant, "col-md-" + perRow);
+            // const name = new nameComponent({containerElementId: 'render-object'});
+            //       name.render(plant, "col-md-" + perRow);
         }
 
 
