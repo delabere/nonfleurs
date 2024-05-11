@@ -1,5 +1,4 @@
 import { createCanvas } from 'canvas';
-import fs from 'fs';
         // const fs = require('fs');
 
 export class Layer {
@@ -135,11 +134,11 @@ export class Layer {
     }
 
     static createCanvas(w, h) {
-        // if (typeof w !== 'number' || typeof h !== 'number') {
-        //     throw new Error('Width and height must be numbers');
-        // }
+        if (typeof w !== 'number' || typeof h !== 'number') {
+            throw new Error('Width and height must be numbers');
+        }
         // TODO: figure out why the canvas size isn't being passed in correctly
-        const canvas = createCanvas(100, 200);
+        const canvas = createCanvas(w, h);
         const context = canvas.getContext('2d');
 
         // Example of setting properties
@@ -147,14 +146,14 @@ export class Layer {
         context.imageSmoothingQuality = "low";
 
         // Example drawing: draw a simple rectangle
-        context.fillStyle = 'red';
-        context.fillRect(10, 10, 50, 50);
+        // context.fillStyle = 'red';
+        // context.fillRect(10, 10, 50, 50);
 
         // Example of saving to a file
-        const out = fs.createWriteStream('./test.png');
-        const stream = canvas.createPNGStream();
-        stream.pipe(out);
-        out.on('finish', () => console.log('The PNG file was created.'));
+        // const out = fs.createWriteStream('./test.png');
+        // const stream = canvas.createPNGStream();
+        // stream.pipe(out);
+        // out.on('finish', () => console.log('The PNG file was created.'));
 
         return context; // You can return the canvas or context depending on your need
     }

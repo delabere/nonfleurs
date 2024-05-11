@@ -1,3 +1,5 @@
+import canvas from 'canvas';
+import fs from 'fs';
 import { Layer } from "./app/layer.js";
 import { Util } from "./app/util.js";
 import { Noise } from "./app/noise.js";
@@ -8,12 +10,11 @@ export class Drawable {
 
     FILTERING_ENABLED = true;
 
-    constructor(w,h) {
-
-        this.CANVAS_WIDTH = w;
-        this.CANVAS_HEIGHT = h;
+    constructor(args) {
+        this.CANVAS_WIDTH = args.width;
+        this.CANVAS_HEIGHT = args.height;
         
-        this._ctx = new Layer(w,h); 
+        this._ctx = new Layer(this.CANVAS_WIDTH, this.CANVAS_HEIGHT); 
     }
 
     set filtering_enabled(bool) {
@@ -158,7 +159,7 @@ export class Drawable {
         this.clear();
         var [lay0, lay1] = this.layers.slice(0,2);
 
-        this.position(lay0,lay1, 0, 0, "normal", "normal");
+        this.position(lay0, lay1, 0, 0, "normal", "normal");
 
         if(this.FILTERING_ENABLED) {
             Layer.filter(this.ctx,Filter.fade); //blotches
@@ -173,6 +174,11 @@ export class Drawable {
             // canvasContainer.innerHTML = "";
             // canvasContainer.appendChild(this.canvas)
 
+        // Example of saving to a file
+        const out = fs.createWriteStream('./test.png');
+        const stream = this.canvas.createPNGStream();
+        stream.pipe(out);
+        out.on('finish', () => console.log('The PNG file was created.'));
     }
 
     
