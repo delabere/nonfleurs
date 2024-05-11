@@ -12,8 +12,8 @@ import { GeneEditorComponent } from './app/geneEditorComponent.js';
 
 class Generator {
 
-    CANVAS_WIDTH = 704;
-    CANVAS_HEIGHT = 863;
+    CANVAS_WIDTH = 448*1.5;
+    CANVAS_HEIGHT = 600*1.5;
 
     constructor() {
         this._id = 0;
@@ -22,7 +22,7 @@ class Generator {
         this._configuration = () => ({
             plantCount: 1,
             seed: 'exampleSeed123',
-            plantType: 'flowering'
+            // plantType: 'flowering'
         });
 
         // this.geneEditor = new GeneEditorComponent({elementId: 'gene-editor-component'});
