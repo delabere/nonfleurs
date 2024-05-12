@@ -2,6 +2,7 @@
 import iro from '@jaames/iro';
 import { Color } from './color.js';
 import { ColorTranslator } from 'colortranslator';
+import { EventTarget } from 'event-target-shim';
 
 export class GeneEditorComponent extends EventTarget {
 
