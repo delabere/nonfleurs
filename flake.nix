@@ -1,36 +1,24 @@
-{
-  inputs = {
-    # nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    systems.url = "github:nix-systems/default";
+
+with import ../nixpkgs { };
+let
+  inky = python3.pkgs.buildPythonPackage {
+    pname = "inky";
+    version = "git";
+
+    src = lib.cleanSource ./library;
+
+    propagatedBuildInputs = with python3.pkgs; [
+      numpy
+      pillow
+      rpi-gpio
+      smbus2
+      spidev
+    ];
+
+    # needs hardware
+    doCheck = false;
   };
-
-  outputs = {
-    systems,
-    nixpkgs,
-    ...
-  } @ inputs: let
-    eachSystem = f:
-      nixpkgs.lib.genAttrs (import systems) (
-        system:
-          f nixpkgs.legacyPackages.${system}
-      );
-  in {
-    devShells = eachSystem (pkgs: {
-      default = pkgs.mkShell {
-        buildInputs = [
-          # pkgs.nodejs
-          # You can set the major version of Node.js to a specific one instead
-          # of the default version
-          pkgs.nodejs-11_x
-
-          # You can choose pnpm, yarn, or none (npm).
-          # pkgs.nodePackages.pnpm
-          # pkgs.yarn
-
-          # pkgs.nodePackages.typescript
-          # pkgs.nodePackages.typescript-language-server
-        ];
-      };
-    });
-  };
+in
+mkShell {
+  buildInputs = [ inky ];
 }
