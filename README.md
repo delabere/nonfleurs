@@ -162,3 +162,28 @@ we need to make the run file executable
 and then
 
 `./run.sh`
+
+
+
+# now we install the witty pi 3 software
+the witty pi is responsible for turning the pi on and off at specific times so that we can save power
+and hopefully run this thing off a power bank
+
+http://www.uugear.com/repo/WittyPi3/install.sh
+sudo sh install.sh
+
+disable 1-wire mode in raspi-config
+
+sudo apt-get install i2c-tools
+
+replace the repo for witty pi in the shell script with https://github.com/WiringPi/WiringPi.git
+
+reboot the pi
+
+looks like the script is still dumb and is assuming that my user is "pi" sigh
+
+we will need to change that in the script, it's installed into home/wittyPi and I'm not sure whether this will work or not
+
+instead we can just move it into /home/ubuntu/wittyPi because that is where the /etc/init.d/wittypi script is looking for the config file
+
+
